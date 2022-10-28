@@ -1,0 +1,319 @@
+{
+    "annotations": {
+        "list": [
+            {
+                "builtIn": 1,
+                "datasource": {
+                    "type": "grafana",
+                    "uid": "-- Grafana --"
+                },
+                "enable": true,
+                "hide": true,
+                "iconColor": "rgba(0, 211, 255, 1)",
+                "name": "Annotations & Alerts",
+                "target": {
+                    "limit": 100,
+                    "matchAny": false,
+                    "tags": [],
+                    "type": "dashboard"
+                },
+                "type": "dashboard"
+            }
+        ]
+    },
+    "editable": true,
+    "fiscalYearStartMonth": 0,
+    "graphTooltip": 0,
+    "id": 5,
+    "links": [
+        {
+            "asDropdown": false,
+            "icon": "external link",
+            "includeVars": false,
+            "keepTime": false,
+            "tags": [],
+            "targetBlank": true,
+            "title": "Statuses evaluation rules",
+            "tooltip": "See Burrow wiki",
+            "type": "link",
+            "url": "https://github.com/linkedin/Burrow/wiki/Consumer-Lag-Evaluation-Rules#evaluation-rules"
+        }
+    ],
+    "liveNow": false,
+    "panels": [
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "PBFA97CFB590B2093"
+            },
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "continuous-GrYlRd"
+                    },
+                    "custom": {
+                        "fillOpacity": 70,
+                        "lineWidth": 0,
+                        "spanNulls": false
+                    },
+                    "mappings": [
+                        {
+                            "options": {
+                                "0": {
+                                    "color": "red",
+                                    "index": 6,
+                                    "text": "NOTFOUND"
+                                },
+                                "1": {
+                                    "color": "green",
+                                    "index": 0,
+                                    "text": "OK"
+                                },
+                                "2": {
+                                    "color": "yellow",
+                                    "index": 1,
+                                    "text": "WARN"
+                                },
+                                "3": {
+                                    "color": "red",
+                                    "index": 2,
+                                    "text": "ERR"
+                                },
+                                "4": {
+                                    "color": "red",
+                                    "index": 3,
+                                    "text": "STOP"
+                                },
+                                "5": {
+                                    "color": "red",
+                                    "index": 4,
+                                    "text": "STALL"
+                                },
+                                "6": {
+                                    "color": "red",
+                                    "index": 5,
+                                    "text": "REWIND"
+                                }
+                            },
+                            "type": "value"
+                        }
+                    ],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 24,
+                "x": 0,
+                "y": 0
+            },
+            "id": 2,
+            "options": {
+                "alignValue": "center",
+                "legend": {
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": true
+                },
+                "mergeValues": true,
+                "rowHeight": 0.9,
+                "showValue": "auto",
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "repeat": "kafka_cluster",
+            "repeatDirection": "v",
+            "targets": [
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "PBFA97CFB590B2093"
+                    },
+                    "editorMode": "builder",
+                    "expr": "burrow_kafka_consumer_status{consumer_group!=\"burrow-local\"}",
+                    "format": "time_series",
+                    "legendFormat": "{{consumer_group}}",
+                    "range": true,
+                    "refId": "A"
+                }
+            ],
+            "title": "Consumers state",
+            "transparent": true,
+            "type": "state-timeline"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "PBFA97CFB590B2093"
+            },
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "",
+                        "axisPlacement": "left",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    }
+                },
+                "overrides": [
+                    {
+                        "__systemRef": "hideSeriesFrom",
+                        "matcher": {
+                            "id": "byNames",
+                            "options": {
+                                "mode": "exclude",
+                                "names": ["kafka-transfer-group-accounts-0"],
+                                "prefix": "All except:",
+                                "readOnly": true
+                            }
+                        },
+                        "properties": [
+                            {
+                                "id": "custom.hideFrom",
+                                "value": {
+                                    "legend": false,
+                                    "tooltip": false,
+                                    "viz": true
+                                }
+                            }
+                        ]
+                    }
+                ]
+            },
+            "gridPos": {
+                "h": 5,
+                "w": 24,
+                "x": 0,
+                "y": 8
+            },
+            "id": 4,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": true
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "repeat": "kafka_cluster",
+            "repeatDirection": "v",
+            "targets": [
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "PBFA97CFB590B2093"
+                    },
+                    "editorMode": "builder",
+                    "expr": "burrow_kafka_consumer_lag_total{consumer_group!=\"burrow-local\"}",
+                    "legendFormat": "{{consumer_group}}",
+                    "range": true,
+                    "refId": "A"
+                }
+            ],
+            "title": "Consumers lags",
+            "transparent": true,
+            "type": "timeseries"
+        }
+    ],
+    "refresh": false,
+    "schemaVersion": 37,
+    "style": "dark",
+    "tags": [],
+    "templating": {
+        "list": [
+            {
+                "current": {
+                    "selected": true,
+                    "text": ["sdk2.dev.tonlabs.io:8008"],
+                    "value": ["sdk2.dev.tonlabs.io:8008"]
+                },
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "PBFA97CFB590B2093"
+                },
+                "definition": "label_values(burrow_kafka_consumer_status,instance)",
+                "hide": 0,
+                "includeAll": false,
+                "label": "kafka cluster",
+                "multi": true,
+                "name": "kafka_cluster",
+                "options": [],
+                "query": {
+                    "query": "label_values(burrow_kafka_consumer_status,instance)",
+                    "refId": "StandardVariableQuery"
+                },
+                "refresh": 1,
+                "regex": "",
+                "skipUrlSync": false,
+                "sort": 0,
+                "type": "query"
+            }
+        ]
+    },
+    "time": {
+        "from": "2022-10-28T04:51:29.565Z",
+        "to": "2022-10-28T05:33:28.377Z"
+    },
+    "timepicker": {},
+    "timezone": "",
+    "title": "Kafka consumers states",
+    "uid": "TqeHSAHVk",
+    "version": 19,
+    "weekStart": ""
+}

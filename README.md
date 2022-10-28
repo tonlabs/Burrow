@@ -6,6 +6,15 @@
 
 # Burrow - Kafka Consumer Lag Checking
 
+---
+
+This is a fork from linkedin/Burrow with modified docker-compose, see git diff.  Now it runs on sdk2.dev.tonlabs.io.
+
+Grafana (admin/tigerscott): http://sdk2.dev.tonlabs.io:3000/d/TqeHSAHVk/kafka-consumers-states?from=now-3h&to=now&orgId=1
+
+Prometheus: http://sdk2.dev.tonlabs.io:9090
+
+---
 
 Burrow is a monitoring companion for [Apache Kafka](http://kafka.apache.org) that provides consumer lag checking as a service without the need for specifying thresholds. It monitors committed offsets for all consumers and calculates the status of those consumers on demand. An HTTP endpoint is provided to request status on demand, as well as provide other Kafka cluster information. There are also configurable notifiers that can send status out via email or HTTP calls to another service.
 
