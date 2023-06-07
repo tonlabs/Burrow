@@ -1,0 +1,50 @@
+#
+# This is a Burrow configuration file for Kafka aggregation cluster
+# hosted on notification[01-03].dev.tonlabs.io.
+#
+# To use it:
+# - mv config/burrow.toml.cluster config/burrow.toml
+# - edit `username` and `password` variables.
+# - build your docker container, mount your ./config directory into `/etc/burrow` and run docker.
+#
+[cluster.notification]
+class-name="kafka"
+servers=["notification01.dev.tonlabs.io:29092","notification02.dev.tonlabs.io:29092","notification03.dev.tonlabs.io:29092"]
+topic-refresh=60
+offset-refresh=30
+client-profile="myprofile"
+groups-reaper-refresh=30
+
+[logging]
+level="debug"
+
+
+[zookeeper]
+servers=["notification01.dev.tonlabs.local:2181","notification02.dev.tonlabs.local:2181","notification03.dev.tonlabs.local:2181"]
+timeout=6
+root-path="/burrow"
+client-profile="myprofile"
+
+[client-profile.myprofile]
+kafka-version="0.11.0"
+client-id="burrow-v0"
+sasl="mysaslprofile"
+
+[sasl.mysaslprofile]
+username="USERNAME"
+password="PASSWORD"
+mechanism="SCRAM-SHA-512"
+handshake-first=true
+
+[consumer.myconsumer]
+class-name="kafka"
+cluster="notification"
+servers=[ "notification01.dev.tonlabs.io:29092","notification02.dev.tonlabs.io:29092","notification03.dev.tonlabs.io:29092" ]
+client-profile="myprofile"
+group-denylist="^(console-consumer-|python-kafka-consumer-).*$"
+group-allowlist=""
+
+
+[httpserver.default]
+address=":8000"
+
